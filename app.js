@@ -16,7 +16,7 @@ app.get("/", (req, res) => {
 
 app.get("/restaurants/:res_id", (req, res) => {
   const resinfo = resList.results.filter((index) => {
-    return index.id == req.params.res_id;
+    return index.id === Number(req.params.res_id);
   });
   res.render("show", { title: "Show", style: "res1.css", resinfo: resinfo });
 });
