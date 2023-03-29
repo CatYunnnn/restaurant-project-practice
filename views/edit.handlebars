@@ -1,0 +1,74 @@
+<div>
+  <form action="/restaurants/{{resinfo.id}}/edit" method="POST">
+    <div class="mb-3">
+      <label for="name" class="form-label">name</label>
+      <input
+        class="form-control"
+        id="name"
+        type="text"
+        placeholder="name"
+        name="name"
+        value="{{resinfo.name}}"
+      />
+    </div>
+    <div class="mb-3">
+      <label for="category" class="form-label">category</label>
+      <input
+        class="form-control"
+        id="category"
+        type="text"
+        placeholder="category"
+        name="category"
+        value="{{resinfo.category}}"
+      />
+    </div><div class="mb-3">
+      <label for="location" class="form-label">location</label>
+      <input
+        class="form-control"
+        id="location"
+        type="text"
+        placeholder="location"
+        name="location"
+        value="{{resinfo.location}}"
+      />
+    </div><div class="mb-3">
+      <label for="phone" class="form-label">phone</label>
+      <input
+        class="form-control"
+        id="phone"
+        type="text"
+        placeholder="phone"
+        name="phone"
+        value="{{resinfo.phone}}"
+      />
+    </div><div class="mb-3">
+      <label for="rating" class="form-label">rating</label>
+      <input
+        class="form-control"
+        id="rating"
+        type="text"
+        placeholder="rating"
+        name="rating"
+        value="{{resinfo.rating}}"
+      />
+    </div><div class="mb-3">
+      <label for="description" class="form-label">description</label>
+      <input
+        class="form-control"
+        id="description"
+        type="text"
+        placeholder="description"
+        name="description"
+        value="{{resinfo.description}}"
+      />
+    </div>
+    <div style="display:flex;"><button
+        type="submit"
+        class="btn btn-primary me-3"
+      >Save</button>
+      <a href="/"><button
+          type="button"
+          class="btn btn-primary"
+        >home</button></a></div>
+  </form>
+</div>

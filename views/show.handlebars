@@ -18,7 +18,7 @@
   <div class="banner"></div>
 </header>
 
-<h1 class="mb-1 restaurant-show-title">{{resinfo.0.name}}</h1>
+<h1 class="mb-1 restaurant-show-title">{{resinfo.name}}</h1>
 <div class="container">
   <div class="row">
     <div class="col-12 col-md-10 mx-auto">
@@ -28,7 +28,7 @@
           <i class="fas fa-utensils pr-2"></i>
           類別：
         </span>
-        {{resinfo.0.category}}
+        {{resinfo.category}}
       </p>
 
       <p class="mb-1">
@@ -36,12 +36,8 @@
           <i class="fas fa-map-marker-alt pr-2"></i>
           地址：
         </span>
-        {{resinfo.0.location}}
-        <a
-          href="{{resinfo.0.google_map}}"
-          class="text-secondary"
-          target="_blank"
-        >
+        {{resinfo.location}}
+        <a href="{{resinfo.google_map}}" class="text-secondary" target="_blank">
           <i class="fas fa-location-arrow pr-2 fa-xs"></i>
         </a>
       </p>
@@ -51,17 +47,17 @@
           <i class="fas fa-mobile-alt pr-2"></i>
           電話：
         </span>
-        {{resinfo.0.phone}}
+        {{resinfo.phone}}
       </p>
 
       <p class="mb-5">
-        {{resinfo.0.description}}
+        {{resinfo.description}}
       </p>
 
       <img
         class="rounded mx-auto d-block mb-4 w-100"
-        src="{{resinfo.0.image}}"
-        alt="{{resinfo.0.name}}"
+        src="{{resinfo.image}}"
+        alt="{{resinfo.name}}"
         style="max-width: 600px;"
       />
     </div>
