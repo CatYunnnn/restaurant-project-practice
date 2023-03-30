@@ -5,23 +5,10 @@ const bodyParser = require("body-parser");
 const app = express();
 const port = 3000;
 const exphbs = require("express-handlebars");
-const db = mongoose.connection;
+const db = require("./config/mongoose");
 if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
 }
-
-mongoose.connect(process.env.MONGODB_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
-
-db.on("error", () => {
-  console.log("mongodb error!");
-});
-
-db.once("open", () => {
-  console.log("mongodb connected!");
-});
 
 app.engine("handlebars", exphbs.engine({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
@@ -33,16 +20,18 @@ app.get("/restaurants/new", (req, res) => {
 });
 
 app.post("/restaurants/newrestaurant", (req, res) => {
-  const id = req.body.id;
-  const name = req.body.name;
-  const name_en = req.body.name_en;
-  const category = req.body.category;
-  const image = req.body.image;
-  const location = req.body.location;
-  const phone = req.body.phone;
-  const google_map = req.body.google_map;
-  const rating = req.body.rating;
-  const description = req.body.description;
+  const {
+    id,
+    name,
+    name_en,
+    category,
+    image,
+    location,
+    phone,
+    google_map,
+    rating,
+    description,
+  } = req.body;
   const newres = new resList({
     id: id,
     name,
@@ -58,7 +47,10 @@ app.post("/restaurants/newrestaurant", (req, res) => {
   newres
     .save()
     .then(() => res.redirect("/"))
-    .catch((error) => console.log(error));
+    .catch((err) => {
+      console.log(err);
+      res.render("errorPage", { error: err.message });
+    });
 });
 
 app.get("/", (req, res) => {
@@ -66,7 +58,10 @@ app.get("/", (req, res) => {
     .find()
     .lean()
     .then((reses) => res.render("index", { reses: reses, style: "res.css" }))
-    .catch((error) => console.log(error));
+    .catch((err) => {
+      console.log(err);
+      res.render("errorPage", { error: err.message });
+    });
 });
 
 app.get("/restaurants/:res_id", (req, res) => {
@@ -77,27 +72,42 @@ app.get("/restaurants/:res_id", (req, res) => {
       res.render("show", {
         title: "Show",
         resinfo: resinfo,
-        style: "res1.css",
+        style: "show.css",
       });
     })
-    .catch((error) => console.log(error));
+    .catch((err) => {
+      console.log(err);
+      res.render("errorPage", { error: err.message });
+    });
 });
 
 app.get("/search", (req, res) => {
   resList
-    .find({ name: { $exists: true } })
+    .find({
+      $or: [{ name: { $exists: true } }, { category: { $exists: true } }],
+    })
     .lean()
     .then((reses) => {
-      const results = reses.filter((res) =>
-        res.name.toLowerCase().includes(req.query.yoursearch.toLowerCase())
-      );
+      const results = reses.filter((res) => {
+        if (
+          res.name.toLowerCase().includes(req.query.yoursearch.toLowerCase()) ||
+          res.category
+            .toLowerCase()
+            .includes(req.query.yoursearch.toLowerCase())
+        ) {
+          return res;
+        }
+      });
       res.render("index", {
         reses: results,
         style: "res.css",
         yoursearch: req.query.yoursearch,
       });
     })
-    .catch((error) => console.log(error));
+    .catch((err) => {
+      console.log(err);
+      res.render("errorPage", { error: err.message });
+    });
 });
 
 app.get("/restaurants/:id/edit", (req, res) => {
@@ -111,7 +121,10 @@ app.get("/restaurants/:id/edit", (req, res) => {
         resinfo: resinfo,
       });
     })
-    .catch((error) => console.log(error));
+    .catch((err) => {
+      console.log(err);
+      res.render("errorPage", { error: err.message });
+    });
 });
 
 app.post("/restaurants/:id/edit", (req, res) => {
@@ -134,18 +147,21 @@ app.post("/restaurants/:id/edit", (req, res) => {
       resinfo.save();
     })
     .then(() => res.redirect(`/restaurants/${id}`))
-    .catch((error) => console.log(error));
+    .catch((err) => {
+      console.log(err);
+      res.render("errorPage", { error: err.message });
+    });
 });
 
 app.post("/restaurants/:id/delete", (req, res) => {
   const id = req.params.id;
   resList
-    .findOne({ id: Number(req.params.id) })
-    .then((resinfo) => {
-      resinfo.deleteOne();
-    })
+    .deleteOne({ id: Number(req.params.id) })
     .then(() => res.redirect("/"))
-    .catch((error) => console.log(error));
+    .catch((err) => {
+      console.log(err);
+      res.render("errorPage", { error: err.message });
+    });
 });
 
 app.listen(port, () => {
