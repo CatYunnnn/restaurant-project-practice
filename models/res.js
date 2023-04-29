@@ -31,5 +31,9 @@ const resSchema = new Schema({
   description: {
     type: "string",
   },
+  userId: {
+    type: String,
+    required: true,
+  },
 });
 module.exports = mongoose.model("restaurantList", resSchema);

@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
 const resList = require("../../restaurant.json");
 const restaurantList = require("../res");
+const userList = require("../user");
+const bcrypt = require("bcryptjs");
 if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
 }
@@ -9,24 +11,114 @@ mongoose.connect(process.env.MONGODB_URI, {
   useUnifiedTopology: true,
 });
 const db = mongoose.connection;
-db.on("error", () => {
-  console.log("mongodb error!");
-});
+const seed_user1 = {
+  email: "user1@example.com",
+  password: "12345678",
+};
+const seed_user2 = {
+  email: "user2@example.com",
+  password: "12345678",
+};
 db.once("open", () => {
   console.log("mongodb connected!");
-  for (let i = 0; i < resList.results.length; i++) {
-    restaurantList.create({
-      id: `${resList.results[i].id}`,
-      name: `${resList.results[i].name}`,
-      name_en: `${resList.results[i].name_en}`,
-      category: `${resList.results[i].category}`,
-      image: `${resList.results[i].image}`,
-      location: `${resList.results[i].location}`,
-      phone: `${resList.results[i].phone}`,
-      google_map: `${resList.results[i].google_map}`,
-      rating: `${resList.results[i].rating}`,
-      description: `${resList.results[i].description}`,
+
+  bcrypt
+    .genSalt(10)
+    .then((salt) => bcrypt.hash(seed_user1.password, salt))
+    .then((hash) =>
+      userList.create({
+        name: seed_user1.name,
+        email: seed_user1.email,
+        password: hash,
+      })
+    )
+    .then((user) => {
+      let userId = user._id;
+      // create restaurants for first user
+      const firstPromise = [];
+      for (let i = 0; i < 3; i++) {
+        const {
+          id,
+          name,
+          name_en,
+          category,
+          image,
+          location,
+          phone,
+          google_map,
+          rating,
+          description,
+        } = resList.results[i];
+        firstPromise.push(
+          restaurantList.create({
+            id,
+            name,
+            name_en,
+            category,
+            image,
+            location,
+            phone,
+            google_map,
+            rating,
+            description,
+            userId,
+          })
+        );
+      }
+      // 等待所有的 firstPromise 都完成後再繼續下一步
+      return Promise.all(firstPromise);
+    })
+    .then(() =>
+      bcrypt.genSalt(10).then((salt) => bcrypt.hash(seed_user2.password, salt))
+    )
+    .then((hash) =>
+      userList.create({
+        name: seed_user2.name,
+        email: seed_user2.email,
+        password: hash,
+      })
+    )
+    .then((user) => {
+      let userId = user._id;
+      const secondPromise = [];
+      for (let i = 3; i < 6; i++) {
+        const {
+          id,
+          name,
+          name_en,
+          category,
+          image,
+          location,
+          phone,
+          google_map,
+          rating,
+          description,
+        } = resList.results[i];
+        secondPromise.push(
+          restaurantList.create({
+            id,
+            name,
+            name_en,
+            category,
+            image,
+            location,
+            phone,
+            google_map,
+            rating,
+            description,
+            userId,
+          })
+        );
+      }
+      // 等待所有的 secondPromise 都完成後再繼續下一步
+      return Promise.all(secondPromise);
+    })
+    .then(() => {
+      console.log("done.");
+      process.exit();
+    })
+    .catch((error) => {
+      console.error(error);
+      process.exit(1);
     });
-  }
-  console.log("done");
 });
