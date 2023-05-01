@@ -111,15 +111,34 @@
                   class="btn btn-info me-1"
                 >Detail</button></a>
               <form
+                id="sub"
                 action="./restaurants/{{this.id}}?_method=DELETE"
                 method="POST"
                 style="display: inline;"
               >
-                <button type="submit" class="btn btn-info">Delete</button>
+                <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Delete</button>
               </form>
             </div>
           </div>
         {{/each}}
+      </div>
+    </div>
+  </div>
+</div>
+<!--confirm dialog-->
+
+<!-- Modal -->
+<!-- Button trigger modal -->
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        是否確認刪除?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+        <button type="submit" class="btn btn-danger"form="sub">確定刪除</button>
       </div>
     </div>
   </div>

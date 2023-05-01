@@ -89,7 +89,8 @@ router.put("/:id", (req, res) => {
 
 router.delete("/:id", (req, res) => {
   const id = req.params.id;
-  resList
+
+    resList
     .deleteOne({ id: Number(req.params.id) })
     .then(() => res.redirect("/"))
     .catch((err) => {

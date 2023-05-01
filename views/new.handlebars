@@ -1,17 +1,33 @@
-<div>
+  <nav class="navbar navbar-light bg-light">
+    <div class="container" style="display:flex;">
+      <p class="navbar-brand" href="/">
+        <img
+          src="https://assets-lighthouse.s3.amazonaws.com/uploads/image/file/6227/restaurant-list-logo.png"
+          width="30"
+          height="30"
+          class="d-inline-block align-top"
+          alt="我的餐廳清單"
+        />
+        請在下方新增餐廳資料
+      </p>
+    </div>
+  </nav>
+
+<div class="container">
   <form action="/restaurants/newrestaurant" method="POST">
-    <div class="mb-3">
+    <div class="mb-3 mt-3 form-group">
       <label for="id" class="form-label">id</label>
       <input
         class="form-control"
         id="id"
-        type="text"
+        type="number"
         placeholder="id(請輸入數字)"
         name="id"
+        maxlength="20"
         required
       />
     </div>
-    <div class="mb-3">
+    <div class="mb-3 form-group">
       <label for="name" class="form-label">name</label>
       <input
         class="form-control"
@@ -19,9 +35,10 @@
         type="text"
         placeholder="name"
         name="name"
+        maxlength="20"
       />
     </div>
-    <div class="mb-3">
+    <div class="mb-3 form-group">
       <label for="name_en" class="form-label">name_en</label>
       <input
         id="name_en"
@@ -29,9 +46,10 @@
         type="text"
         placeholder="english name"
         name="name_en"
+        maxlength="20"
       />
     </div>
-    <div class="mb-3">
+    <div class="mb-3 form-group">
       <label for="category" class="form-label">category</label>
       <input
         class="form-control"
@@ -39,9 +57,10 @@
         type="text"
         placeholder="category"
         name="category"
+        maxlength="20"
       />
     </div>
-    <div class="mb-3">
+    <div class="mb-3 form-group">
       <label for="image" class="form-label">image</label>
       <input
         class="form-control"
@@ -49,8 +68,9 @@
         type="text"
         placeholder="image"
         name="image"
+        maxlength="150"
       />
-    </div><div class="mb-3">
+    </div><div class="mb-3 form-group">
       <label for="location" class="form-label">location</label>
       <input
         class="form-control"
@@ -58,18 +78,20 @@
         type="text"
         placeholder="location"
         name="location"
+        maxlength="20"
       />
-    </div><div class="mb-3">
+    </div><div class="mb-3 form-group">
       <label for="phone" class="form-label">phone</label>
       <input
         class="form-control"
         id="phone"
-        type="text"
+        type="number"
         placeholder="phone"
         name="phone"
+        maxlength="20"
       />
     </div>
-    <div class="mb-3">
+    <div class="mb-3 form-group">
       <label for="google_map" class="form-label">google_map</label>
       <input
         class="form-control"
@@ -77,8 +99,9 @@
         type="text"
         placeholder="google_map"
         name="google_map"
+        maxlength="20"
       />
-    </div><div class="mb-3">
+    </div><div class="mb-3 form-group">
       <label for="rating" class="form-label">rating</label>
       <input
         class="form-control"
@@ -86,8 +109,9 @@
         type="text"
         placeholder="rating"
         name="rating"
+        maxlength="5"
       />
-    </div><div class="mb-3">
+    </div><div class="mb-3 form-group">
       <label for="description" class="form-label">description</label>
       <input
         class="form-control"
@@ -95,15 +119,16 @@
         type="text"
         placeholder="description"
         name="description"
+        maxlength="40"
       />
     </div>
     <div style="display:flex;"><button
         type="submit"
-        class="btn btn-primary me-3"
+        class="btn btn-info me-3"
       >Create</button>
       <a href="/"><button
           type="button"
-          class="btn btn-primary"
+          class="btn btn-info"
         >home</button></a></div>
   </form>
 </div>
