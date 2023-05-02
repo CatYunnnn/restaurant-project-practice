@@ -14,8 +14,9 @@ router.get("/", (req, res) => {
     });
 });
 router.get("/desc", (req, res) => {
+  const userId = req.user._id;
   resList
-    .find()
+    .find({ userId })
     .lean()
     .sort({ name: "desc" })
     .then((reses) => res.render("index", { reses: reses, style: "res.css" }))
@@ -25,8 +26,9 @@ router.get("/desc", (req, res) => {
     });
 });
 router.get("/category", (req, res) => {
+  const userId = req.user._id;
   resList
-    .find()
+    .find({ userId })
     .lean()
     .sort({ category: "asc" })
     .then((reses) => res.render("index", { reses: reses, style: "res.css" }))
@@ -36,8 +38,9 @@ router.get("/category", (req, res) => {
     });
 });
 router.get("/location", (req, res) => {
+  const userId = req.user._id;
   resList
-    .find()
+    .find({ userId })
     .lean()
     .sort({ location: "asc" })
     .then((reses) => res.render("index", { reses: reses, style: "res.css" }))

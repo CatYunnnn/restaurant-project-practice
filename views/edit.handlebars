@@ -1,6 +1,21 @@
-<div>
+<nav class="navbar navbar-light bg-light">
+  <div class="container" style="display:flex;">
+    <p class="navbar-brand" href="/">
+      <img
+        src="https://assets-lighthouse.s3.amazonaws.com/uploads/image/file/6227/restaurant-list-logo.png"
+        width="30"
+        height="30"
+        class="d-inline-block align-top"
+        alt="我的餐廳清單"
+      />
+      請在下方修改餐廳資料
+    </p>
+  </div>
+</nav>
+
+<div class="container">
   <form action="/restaurants/{{resinfo.id}}?_method=PUT" method="POST">
-    <div class="mb-3">
+    <div class="mb-3 mt-3">
       <label for="name" class="form-label">name</label>
       <input
         class="form-control"
@@ -8,6 +23,7 @@
         type="text"
         placeholder="name"
         name="name"
+        maxlength="20"
         value="{{resinfo.name}}"
       />
     </div>
@@ -19,6 +35,7 @@
         type="text"
         placeholder="category"
         name="category"
+        maxlength="20"
         value="{{resinfo.category}}"
       />
     </div><div class="mb-3">
@@ -29,6 +46,7 @@
         type="text"
         placeholder="location"
         name="location"
+        maxlength="25"
         value="{{resinfo.location}}"
       />
     </div><div class="mb-3">
@@ -36,9 +54,12 @@
       <input
         class="form-control"
         id="phone"
-        type="text"
+        type="number"
         placeholder="phone"
         name="phone"
+        min="0"
+        max="9999999999999999999"
+        oninput="if(value.length>19)value=value.slice(0,19)"
         value="{{resinfo.phone}}"
       />
     </div><div class="mb-3">
@@ -46,9 +67,13 @@
       <input
         class="form-control"
         id="rating"
-        type="text"
+        type="number"
         placeholder="rating"
         name="rating"
+        min="0"
+        max="999"
+        step="0.1"
+        oninput="if(value.length>3)value=value.slice(0,3)"
         value="{{resinfo.rating}}"
       />
     </div><div class="mb-3">
@@ -59,6 +84,7 @@
         type="text"
         placeholder="description"
         name="description"
+        maxlength="20"
         value="{{resinfo.description}}"
       />
     </div>
