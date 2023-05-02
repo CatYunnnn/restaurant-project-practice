@@ -20,10 +20,10 @@
       <input
         class="form-control"
         id="id"
-        type="number"
-        placeholder="id(請輸入數字)"
+        type="text"
+        placeholder="id(請輸入數字0~999)"
         name="id"
-        maxlength="20"
+        pattern="^([0-9]|[1-9][0-9]{1,2})$"
         required
       />
     </div>
@@ -33,7 +33,7 @@
         class="form-control"
         id="name"
         type="text"
-        placeholder="name"
+        placeholder="請輸入20個字元以內的文字"
         name="name"
         maxlength="20"
       />
@@ -44,7 +44,7 @@
         id="name_en"
         class="form-control"
         type="text"
-        placeholder="english name"
+        placeholder="請輸入20個字元以內的文字"
         name="name_en"
         maxlength="20"
       />
@@ -55,7 +55,7 @@
         class="form-control"
         id="category"
         type="text"
-        placeholder="category"
+        placeholder="請輸入20個字元以內的文字"
         name="category"
         maxlength="20"
       />
@@ -66,7 +66,7 @@
         class="form-control"
         id="image"
         type="text"
-        placeholder="image"
+        placeholder="若圖片網址過長，請選擇轉為短網址"
         name="image"
         maxlength="150"
       />
@@ -76,7 +76,7 @@
         class="form-control"
         id="location"
         type="text"
-        placeholder="location"
+        placeholder="請輸入20個字元以內的文字"
         name="location"
         maxlength="20"
       />
@@ -85,12 +85,10 @@
       <input
         class="form-control"
         id="phone"
-        type="number"
-        placeholder="phone"
+        type="tel"
+        placeholder="請注意格式是098-765-4321或0987654321"
         name="phone"
-        min="0"
-        max="9999999999999999999"
-        oninput="if(value.length>19)value=value.slice(0,19)"
+        pattern="^\(?\d{3}\)?[- ]?\d{3}[- ]?\d{4}$"
       />
     </div>
     <div class="mb-3 form-group">
@@ -99,7 +97,7 @@
         class="form-control"
         id="google_map"
         type="text"
-        placeholder="google_map"
+        placeholder="請輸入20個字元以內的文字"
         name="google_map"
         maxlength="20"
       />
@@ -108,13 +106,10 @@
       <input
         class="form-control"
         id="rating"
-        type="number"
-        placeholder="rating"
+        type="text"
+        placeholder="請輸入0~5之間並允許一位的小數點"
         name="rating"
-        min="0"
-        max="999"
-        step="0.1"
-        oninput="if(value.length>3)value=value.slice(0,3)"
+        pattern="^[0-4](\.\d)?|[5]$"
       />
     </div><div class="mb-3 form-group">
       <label for="description" class="form-label">description</label>
@@ -122,7 +117,7 @@
         class="form-control"
         id="description"
         type="text"
-        placeholder="description"
+        placeholder="請在40個字元內簡短描述"
         name="description"
         maxlength="40"
       />
